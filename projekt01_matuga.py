@@ -1,16 +1,12 @@
-# """
 # projekt_1.py: první projekt do Engeto Online Python Akademie
-
 # author: Ľubomír Maťuga
-
 # email: matugalubomir@gmail.com
-
 # discord: Ľubomír Maťuga
 
-# """
 import sys
 from task_template import TEXTS
 
+# LOGIN
 users = {"bob":"123",
        "ann":"pass123",
         "mike":"password123",
@@ -21,67 +17,59 @@ user_password = input("password:")
 
 if user_name in users and users[user_name] == user_password:
        print("----------------------------------------")
-       print(f"Welcome to the app, {user_name}.\nWe have 3 texts to be analyzed.")
+       print(f"Welcome to the app, {user_name}.\nWe have {len(TEXTS)} texts to be analyzed.")
 else:
        print("Unregistered user, terminating the program...")
        sys.exit()
 
 print("----------------------------------------")
 
-try:
-       text_number = int(input("Enter a number btw. 1 and 3 to select: "))
-       if text_number not in range(1,4) or text_number is str:
-              print("Wrong input, terminating the program...")
-              sys.exit()
-
-except ValueError:
+# ANALYSED TEXT SELECTION
+text_number = int(input(f"Enter a number btw. 1 and {len(TEXTS)} to select: "))
+if text_number not in range(1,(len(TEXTS) + 1)):
        print("Wrong input, terminating the program...")
        sys.exit()
 
 print("----------------------------------------")
 
-# CLEARING TEXT
+# TEXT CLEARING
 clear_text=[]
 for sign in (TEXTS[text_number - 1]):
        if sign.isalnum() or sign == " " or sign == "\n": 
               clear_text.append(sign)
 join_text = "".join(clear_text)
 final_text = join_text.split()
+print(final_text)
 
 # TEXT STATISTICS
-sum_words = (len(final_text))
-print(f"There are {sum_words} words in the selected text.")
-
 titlecase_words = []
-for titlecase_word in final_text:
-       if titlecase_word[0].isupper():
-              titlecase_words.append(titlecase_word)
-sum_titlecase_words = len(titlecase_words)
-print(f"There are {sum_titlecase_words} titlecase words.")
-
 uppercase_words = []
-for uppercase_word in final_text:
-       if uppercase_word.isupper() and uppercase_word.isalpha():
-              uppercase_words.append(uppercase_word)
-sum_uppercase_words = (len(uppercase_words))
-print(f"There are {sum_uppercase_words} uppercase words.")
-
 lowercase_words = []
-for lowercase_word in final_text:
-       if lowercase_word.islower() and lowercase_word.isalpha():
-              lowercase_words.append(lowercase_word)
-sum_lowercase_words = (len(lowercase_words))
-print(f"There are {sum_lowercase_words} lowercase words.")
-
 numerical_words = []
-for numerical_word in final_text:
-       if numerical_word.isnumeric():
-              numerical_words.append(numerical_word)
-num_words = (len(numerical_words))
-print(f"There are {num_words} numeric strings.")
 
+sum_words = (len(final_text))
+for word in final_text:
+    if word[0].istitle():
+        titlecase_words.append(word)
+    if word.isupper() and word.isalpha():
+        uppercase_words.append(word)
+    if word.islower() and word.isalpha():
+        lowercase_words.append(word)
+    if word.isnumeric():
+        numerical_words.append(word)
+        
+sum_titlecase_words = len(titlecase_words)
+sum_uppercase_words = len(uppercase_words)
+sum_lowercase_words = len(lowercase_words)
+num_words = len(numerical_words)
 int_numerical_words = list(map(int,numerical_words))
 sum_numerical_words = sum(int_numerical_words)
+
+print(f"There are {sum_words} words in the selected text.")
+print(f"There are {sum_titlecase_words} titlecase words.")
+print(f"There are {sum_uppercase_words} uppercase words.")
+print(f"There are {sum_lowercase_words} lowercase words.")
+print(f"There are {num_words} numeric strings.")
 print(f"The sum of all the numbers {sum_numerical_words}.")
 
 print("----------------------------------------")
