@@ -39,7 +39,6 @@ for sign in (TEXTS[text_number - 1]):
               clear_text.append(sign)
 join_text = "".join(clear_text)
 final_text = join_text.split()
-print(final_text)
 
 # TEXT STATISTICS
 titlecase_words = []
